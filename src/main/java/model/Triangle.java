@@ -1,9 +1,10 @@
 package model;
 
 import Util.CommonUtil;
-import service.Formula;
 
-public class Triangle extends GeometricFigure implements Formula {
+import java.util.Objects;
+
+public class Triangle extends GeometricFigure{
     private final double side1;
     private final double side2;
     private final double side3;
@@ -27,9 +28,33 @@ public class Triangle extends GeometricFigure implements Formula {
         return side3;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Triangle)) return false;
+        if (!super.equals(o)) return false;
+        Triangle triangle = (Triangle) o;
+        return Double.compare(triangle.getSide1(),
+                getSide1()) == 0 && Double.compare(triangle.getSide2(),
+                getSide2()) == 0 && Double.compare(triangle.getSide3(), getSide3()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getSide1(), getSide2(), getSide3());
+    }
+
     public double calculateArea() {
         double p = (side1 + side2 + side3) / 2;
-        return CommonUtil.roundNumber(
-                (sqrt(p * (p - side1) * (p - side2) * (p - side3))),2);
+        double area;
+        try{
+             area=CommonUtil.roundNumber((Math.sqrt(p * (p - side1) * (p - side2) * (p - side3))),2);
+             if(area==0){
+                 throw new IllegalArgumentException();
+             }
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("It is impossible to create a triangle with this sides.");
+        }
+        return area;
     }
 }

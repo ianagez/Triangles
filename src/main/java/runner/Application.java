@@ -1,18 +1,14 @@
 package runner;
 
 import comparator.DescendingAreaComparator;
-import exception.InvalidNumberException;
-import exception.InvalidParametersException;
 import exception.NoSuchFigureException;
-import exception.WrongParametersLength;
 import model.GeometricFigure;
 import service.SrtingConsts;
 import service.factory.FigureManager;
 import service.factory.FigureManagerFactory;
 import service.messenger.Messenger;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Application {
     private FigureManager manager;
@@ -24,37 +20,45 @@ public class Application {
     public void run() {
 
         initFigureManager();
+        //TODO pass list to manager
 
-        Set<GeometricFigure> figures = new TreeSet<>(new DescendingAreaComparator<>());
-        fillFiguresSet(figures, "yes");
-        System.out.println(manager.figuresToString(figures));
+        List<GeometricFigure> figures = new ArrayList<>();
+        fillFiguresList(figures);
+        figures.sort(new DescendingAreaComparator<>());
+        messenger.sendMessage(manager.figuresToString(figures));
     }
 
-    private Set<GeometricFigure> fillFiguresSet(Set<GeometricFigure> figures, String answer) {
-        if (!(answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("y"))) {
-            return figures;
+    private void fillFiguresList(List<GeometricFigure> figures) {
+        String answer=SrtingConsts.YES;
+        while (answer.equalsIgnoreCase(SrtingConsts.YES) || answer.equalsIgnoreCase(SrtingConsts.Y)){
+            messenger.sendMessage(String.format(SrtingConsts.ENTER_PARAMETERS, manager.getFigureName()));
+            messenger.sendMessage(manager.getParamsExample());
+            GeometricFigure figure=getFigureByUserParams();
+            if(figure!=null){
+                figures.add(figure);
+                messenger.sendMessage(String.format(SrtingConsts.WOULD_YOU_LIKE_TO_CONTINUE, manager.getFigureName()));
+                answer=messenger.getMessage();
+            }
         }
-        messenger.sendMessage(String.format("Please enter parameters for %s.", manager.getFigureName()));
-        messenger.sendMessage(manager.getParamsExample());
-        GeometricFigure figure;
-        try {
-            figure = manager.createGeometricFigure(messenger.getMessage());
-        } catch (WrongParametersLength | InvalidNumberException | NumberFormatException | InvalidParametersException e) {
-            messenger.sendMessage(e.getMessage());
-            return fillFiguresSet(figures, "yes");
-        }
-        figures.add(figure);
-        messenger.sendMessage("Would you like to continue? (yes/y)");
-        return fillFiguresSet(figures, messenger.getMessage());
     }
 
     private void initFigureManager(){
-        messenger.sendMessage(SrtingConsts.CHOOSE_FIGURE);
-        try{
-            manager = FigureManagerFactory.makeFigureManager(messenger.getMessage());
-        }catch (NoSuchFigureException e){
-            messenger.sendMessage(e.getMessage());
-             initFigureManager();
+        while (manager==null){
+            messenger.sendMessage(SrtingConsts.CHOOSE_FIGURE);
+            try{
+                manager = FigureManagerFactory.makeFigureManager(messenger.getMessage());
+            }catch (NoSuchFigureException e){
+                messenger.sendMessage(e.getMessage());
+            }
         }
+    }
+    public GeometricFigure getFigureByUserParams(){
+        GeometricFigure figure=null;
+        try {
+            figure = manager.createGeometricFigure(messenger.getMessage());
+        } catch (Exception e) {
+            messenger.sendMessage(e.getMessage());
+        }
+        return figure;
     }
 }

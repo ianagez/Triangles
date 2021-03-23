@@ -1,9 +1,8 @@
 package model;
 
 import Util.CommonUtil;
-import service.Formula;
 
-public class Circle extends GeometricFigure implements Formula {
+public class Circle extends GeometricFigure{
     private final double radius;
 
     public Circle(String name, double radius) {

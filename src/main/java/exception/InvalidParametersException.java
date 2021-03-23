@@ -1,6 +1,6 @@
 package exception;
 
-public class InvalidParametersException extends Exception{
+public class InvalidParametersException extends FigureParametersException{
     public InvalidParametersException(String msg){
         super(msg);
     }

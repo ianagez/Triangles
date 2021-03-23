@@ -1,10 +1,9 @@
 package service.factory;
 
-import exception.InvalidNumberException;
-import exception.WrongParametersLength;
-import exception.InvalidParametersException;
+import exception.FigureParametersException;
 import model.GeometricFigure;
 
+import java.util.List;
 import java.util.Set;
 
 public abstract class FigureManager {
@@ -21,11 +20,9 @@ public abstract class FigureManager {
     }
     public String getParamsExample(){ return paramsExample; }
 
-    public abstract GeometricFigure createGeometricFigure(String figureParams) throws
-            WrongParametersLength, NumberFormatException, InvalidNumberException,
-            InvalidParametersException;
+    public abstract GeometricFigure createGeometricFigure(String figureParams) throws FigureParametersException;
 
-    public String figuresToString(Set<GeometricFigure> figures) {
+    public String figuresToString(List<GeometricFigure> figures) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("============= %ss list: ===============", getFigureName()));
         sb.append("\n");

@@ -1,15 +1,11 @@
 package service.factory;
 
-import exception.InvalidNumberException;
+import exception.FigureParametersException;
 import exception.WrongParametersLength;
-import exception.InvalidParametersException;
 import model.Circle;
-import model.GeometricFigure;
-import model.Rectangle;
 import service.Validator;
 
 import java.util.Arrays;
-import java.util.Set;
 
 public class CircleManager extends FigureManager {
 
@@ -29,12 +25,12 @@ public class CircleManager extends FigureManager {
 
 
     @Override
-    public Circle createGeometricFigure(String params) throws WrongParametersLength,
-            NumberFormatException, InvalidNumberException, InvalidParametersException{
+    public Circle createGeometricFigure(String params) throws FigureParametersException {
         String[] paramArr = params.split(",");
         if (paramArr.length != 2) {
             throw new WrongParametersLength("It should be 2 parameters to build a circle.");
         }
+
         String nameParam = Validator.getFormattedNameParam(paramArr[0]);
         double[] numericParams = Validator.getFormattedNumericParams(Arrays.copyOfRange(paramArr, 1, paramArr.length));
         return new Circle(nameParam, numericParams[0]);

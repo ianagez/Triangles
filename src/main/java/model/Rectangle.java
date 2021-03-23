@@ -1,10 +1,8 @@
 package model;
 
-import jdk.jshell.execution.Util;
-import service.Formula;
 import Util.CommonUtil;
 
-public class Rectangle extends GeometricFigure implements Formula {
+public class Rectangle extends GeometricFigure{
     private final double sideA;
     private final double sideB;
 
@@ -32,5 +30,5 @@ public class Rectangle extends GeometricFigure implements Formula {
 
     @Override
     public double calculateArea() {
-        return CommonUtil.roundNumber(( sideB * sideA),2); }
+        return CommonUtil.roundNumber((sideB * sideA),2); }
 }
