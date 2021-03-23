@@ -15,6 +15,20 @@ class TriangleManagerTest {
     FigureManager manager = new TriangleManager();
 
     @Test
+    void getFigureNameTest() {
+        String expected="Triangle";
+        String actual=manager.getFigureName();
+        assertEquals(expected,actual);
+    }
+    @Test
+    void getParamsExampleTest() {
+        String expected="Example: name, side1, side2, side3";
+        String actual=manager.getParamsExample();
+        assertEquals(expected,actual);
+    }
+
+
+    @Test
     public void ValidValueCreateGeometricFigureTest() throws Exception {
         String input = "Triangle name1, 1,1,1";
         Triangle expected = new Triangle("Triangle name1", 1, 1, 1);
@@ -23,8 +37,13 @@ class TriangleManagerTest {
     }
 
     @Test
-    public void WrongParametersLengthCreateGeometricFigureTest(){
+    public void LessParametersLengthCreateGeometricFigureTest(){
         String input = "Triangle name1, 1,1";
+        assertThrows(WrongParametersLength.class, () -> manager.createGeometricFigure(input));
+    }
+    @Test
+    public void MoreParametersLengthCreateGeometricFigureTest(){
+        String input = "Triangle name1, 1,1,1,1";
         assertThrows(WrongParametersLength.class, () -> manager.createGeometricFigure(input));
     }
     @Test

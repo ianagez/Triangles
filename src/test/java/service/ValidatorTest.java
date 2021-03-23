@@ -63,4 +63,55 @@ class ValidatorTest {
         String[] input= {"2","a","3"};
         assertThrows(NumberFormatException.class,  ()->Validator.getFormattedNumericParams(input));
     }
+
+    @Test
+    void ValidPositiveValueConvertToDoubleTest() {
+        String input="3";
+        double expected=3.0;
+        double actual=Validator.convertToDouble(input);
+        assertEquals(expected,actual);
+    }
+    @Test
+    void ValidNegativeValueConvertToDoubleTest() {
+        String input="-3";
+        double expected=-3.0;
+        double actual=Validator.convertToDouble(input);
+        assertEquals(expected,actual);
+    }
+    @Test
+    void ZeroValueConvertToDoubleTest() {
+        String input="0";
+        double expected=-0.0;
+        double actual=Validator.convertToDouble(input);
+        assertEquals(expected,actual);
+    }
+    @Test
+    void NumberFormatExceptionValueConvertToDoubleTest() {
+        String input="l";
+        assertThrows(NumberFormatException.class,()->Validator.convertToDouble(input));
+    }
+    @Test
+    void PositiveValueConvertToValidDoubleParamTest() throws InvalidNumberException{
+        String input="10";
+        double expected=10.0;
+        double actual=Validator.convertToValidDoubleParam(input);
+        assertEquals(expected,actual);
+    }
+    @Test
+    void NegativeValueConvertToValidDoubleParamTest(){
+        String input="-10";
+        assertThrows(InvalidNumberException.class,()->Validator.convertToValidDoubleParam(input));
+    }
+    @Test
+    void ZeroValueConvertToValidDoubleParamTest(){
+        String input="0";
+        assertThrows(InvalidNumberException.class,()->Validator.convertToValidDoubleParam(input));
+    }
+    @Test
+    void StringValueWithTabsConvertToValidDoubleParamTest() throws InvalidNumberException{
+        String input="  10  .   0 0 ";
+        double expected=10.0;
+        double actual=Validator.convertToValidDoubleParam(input);
+        assertEquals(expected,actual);
+    }
 }
