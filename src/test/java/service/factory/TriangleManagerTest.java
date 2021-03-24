@@ -4,6 +4,7 @@ import exception.InvalidParametersException;
 import exception.WrongParametersLength;
 import model.GeometricFigure;
 import model.Triangle;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import service.Validator;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleManagerTest {
 
-    FigureManager manager = new TriangleManager();
+   FigureManager manager = new TriangleManager();
 
     @Test
     void getFigureNameTest() {
