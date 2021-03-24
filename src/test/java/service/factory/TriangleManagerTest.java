@@ -27,7 +27,6 @@ class TriangleManagerTest {
         assertEquals(expected,actual);
     }
 
-
     @Test
     public void ValidValueCreateGeometricFigureTest() throws Exception {
         String input = "Triangle name1, 1,1,1";
@@ -49,11 +48,11 @@ class TriangleManagerTest {
     @Test
     public void WrongTriangleSidesCreateGeometricFigureTest()  {
         String input = "name1, 1,1,4";
-        assertThrows(NumberFormatException.class, () -> manager.createGeometricFigure(input));
+        assertThrows(IllegalArgumentException.class, () -> manager.createGeometricFigure(input));
     }
     @Test
     public void ZeroAreaTriangleSidesCreateGeometricFigureTest() {
         String input = "name1, 1,1,3";
-        assertThrows(NumberFormatException.class, () -> manager.createGeometricFigure(input));
+        assertThrows(IllegalArgumentException.class, () -> manager.createGeometricFigure(input));
     }
 }

@@ -81,7 +81,7 @@ class ValidatorTest {
     @Test
     void ZeroValueConvertToDoubleTest() {
         String input="0";
-        double expected=-0.0;
+        double expected=0.0;
         double actual=Validator.convertToDouble(input);
         assertEquals(expected,actual);
     }

@@ -22,7 +22,7 @@ public abstract class FigureManager {
 
     public abstract GeometricFigure createGeometricFigure(String figureParams) throws FigureParametersException;
 
-    public String figuresToString(List<GeometricFigure> figures) {
+    public String figuresToString(Set<GeometricFigure> figures) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("============= %ss list: ===============", getFigureName()));
         sb.append("\n");
