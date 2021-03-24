@@ -12,6 +12,7 @@
         <properties>
             <maven.compiler.source>15</maven.compiler.source>
             <maven.compiler.target>15</maven.compiler.target>
+            <junitVer>5.7.0</junitVer>
         </properties>
 
     <build>
@@ -51,7 +52,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>${junitVer}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junitVer}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
